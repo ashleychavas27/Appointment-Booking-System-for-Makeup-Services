@@ -180,6 +180,8 @@
             @auth
                 @if(auth()->user()->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+                    <a href="{{ route('admin.appointments.index') }}">Appointments</a>
+                    <a href="{{ route('admin.calendar') }}">Calendar</a>
                     <a href="{{ route('admin.services.index') }}">Services</a>
                 @else
                     <a href="{{ route('client.dashboard') }}">My Bookings</a>
