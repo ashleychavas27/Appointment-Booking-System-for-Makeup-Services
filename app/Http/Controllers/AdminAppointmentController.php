@@ -48,4 +48,20 @@ class AdminAppointmentController extends Controller
         
         return view('admin.appointments.calendar', compact('appointments'));
     }
+
+    public function reports()
+    {
+        $totalRevenue = Appointment::where('status', 'completed')
+            ->join('services', 'appointments.service_id', '=', 'services.id')
+            ->sum('services.price');
+
+        $report = [
+            'total_completed' => Appointment::where('status', 'completed')->count(),
+            'total_revenue' => $totalRevenue,
+            'this_week' => Appointment::whereBetween('appointment_date', [now()->startOfWeek(), now()->endOfWeek()])->count(),
+            'by_service' => \App\Models\Service::withCount('appointments')->get(),
+        ];
+
+        return view('admin.reports', compact('report'));
+    }
 }

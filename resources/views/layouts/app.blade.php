@@ -77,20 +77,21 @@
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             border: none;
+            display: inline-block;
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: linear-gradient(to right, var(--primary), #ff7675);
             color: white;
             box-shadow: 0 4px 15px rgba(255, 77, 148, 0.3);
         }
 
         .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 77, 148, 0.5);
         }
 
         .container {
@@ -101,9 +102,14 @@
             background: var(--glass);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 2rem;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         /* Form Styles */
@@ -182,6 +188,7 @@
                     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
                     <a href="{{ route('admin.appointments.index') }}">Appointments</a>
                     <a href="{{ route('admin.calendar') }}">Calendar</a>
+                    <a href="{{ route('admin.reports') }}">Reports</a>
                     <a href="{{ route('admin.services.index') }}">Services</a>
                 @else
                     <a href="{{ route('client.dashboard') }}">My Bookings</a>

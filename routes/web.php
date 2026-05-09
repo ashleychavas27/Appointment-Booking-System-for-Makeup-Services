@@ -32,6 +32,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/appointments/{appointment}/status', [AdminAppointmentController::class, 'updateStatus'])->name('appointments.status');
     Route::post('/appointments/{appointment}/reschedule', [AdminAppointmentController::class, 'reschedule'])->name('appointments.reschedule');
     Route::get('/calendar', [AdminAppointmentController::class, 'calendar'])->name('calendar');
+    Route::get('/reports', [AdminAppointmentController::class, 'reports'])->name('reports');
 });
 
 // Client Routes
