@@ -7,7 +7,7 @@
             <h1 style="font-weight: 700;">My Appointments</h1>
             <p style="opacity: 0.7;">View and manage your makeup sessions.</p>
         </div>
-        <a href="#" class="btn btn-primary" style="opacity: 0.5; cursor: not-allowed;">Book New Service (Phase 2)</a>
+        <a href="{{ route('client.book') }}" class="btn btn-primary" style="padding: 0.8rem 1.5rem;">+ Book New Service</a>
     </div>
 
     <div class="glass-card">
@@ -20,6 +20,7 @@
                         <th>Time</th>
                         <th>Status</th>
                         <th>Price</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,16 @@
                                 </span>
                             </td>
                             <td>₱{{ number_format($appointment->service->price, 2) }}</td>
+                            <td>
+                                @if($appointment->status === 'pending')
+                                    <form action="{{ route('client.appointment.cancel', $appointment) }}" method="POST" onsubmit="return confirm('Cancel this appointment?')">
+                                        @csrf
+                                        <button type="submit" class="btn" style="background: rgba(255, 118, 117, 0.1); color: #ff7675; font-size: 0.8rem; padding: 0.4rem 0.8rem; border: 1px solid rgba(255, 118, 117, 0.2);">Cancel</button>
+                                    </form>
+                                @else
+                                    <span style="opacity: 0.4; font-size: 0.8rem;">No actions</span>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

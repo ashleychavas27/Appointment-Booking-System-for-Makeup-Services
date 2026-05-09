@@ -30,4 +30,54 @@ class DashboardController extends Controller
             ->get();
         return view('client.dashboard', compact('appointments'));
     }
+
+    public function bookingPage()
+    {
+        $services = Service::all();
+        return view('client.book', compact('services'));
+    }
+
+    public function bookService(Request $request)
+    {
+        $request->validate([
+            'service_id' => 'required|exists:services,id',
+            'appointment_date' => 'required|date|after_or_equal:today',
+            'appointment_time' => 'required',
+        ]);
+
+        // Check if slot already taken
+        $exists = Appointment::where('appointment_date', $request->appointment_date)
+            ->where('appointment_time', $request->appointment_time)
+            ->where('status', '!=', 'cancelled')
+            ->exists();
+
+        if ($exists) {
+            return back()->withErrors(['appointment_time' => 'This time slot is already booked. Please choose another.'])->withInput();
+        }
+
+        Appointment::create([
+            'user_id' => Auth::id(),
+            'service_id' => $request->service_id,
+            'appointment_date' => $request->appointment_date,
+            'appointment_time' => $request->appointment_time,
+            'notes' => $request->notes,
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('client.dashboard')->with('success', 'Booking successful! Wait for admin to approve.');
+    }
+
+    public function cancelBooking(Appointment $appointment)
+    {
+        if ($appointment->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if ($appointment->status === 'pending') {
+            $appointment->update(['status' => 'cancelled']);
+            return back()->with('success', 'Booking cancelled.');
+        }
+
+        return back()->withErrors(['status' => 'You can only cancel pending bookings.']);
+    }
 }

@@ -29,4 +29,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 // Client Routes
 Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'client'])->name('dashboard');
+    Route::get('/book', [DashboardController::class, 'bookingPage'])->name('book');
+    Route::post('/book', [DashboardController::class, 'bookService'])->name('book.store');
+    Route::post('/appointments/{appointment}/cancel', [DashboardController::class, 'cancelBooking'])->name('appointment.cancel');
 });
