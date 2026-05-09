@@ -51,6 +51,10 @@ class ServiceController extends Controller
 
     public function destroy(Service $service)
     {
+        if ($service->appointments()->count() > 0) {
+            return back()->withErrors(['service' => 'Cannot delete a service that has existing appointments. Try updating it instead to preserve your records.']);
+        }
+
         $service->delete();
         return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully.');
     }
