@@ -183,8 +183,33 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .animate-fade {
-            animation: fadeIn 0.5s ease-out forwards;
+        @media print {
+            nav, footer, .btn, .no-print {
+                display: none !important;
+            }
+            body {
+                background: white;
+            }
+            .container {
+                width: 100%;
+                max-width: none;
+                padding: 0;
+                margin: 0;
+            }
+            .glass-card {
+                box-shadow: none;
+                border: 1px solid #eee;
+                padding: 0;
+            }
+            .animate-fade {
+                animation: none;
+            }
+            table {
+                border: 1px solid #000;
+            }
+            th, td {
+                border-bottom: 1px solid #000;
+            }
         }
     </style>
 </head>
@@ -216,8 +241,18 @@
 
     <main class="container">
         @if(session('success'))
-            <div class="glass-card" style="background: rgba(0, 184, 148, 0.2); margin-bottom: 2rem; border-color: #00b894;">
+            <div class="glass-card" style="background: #dcfce7; color: #166534; margin-bottom: 2rem; border-color: #86efac;">
                 {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="glass-card" style="background: #fee2e2; color: #991b1b; margin-bottom: 2rem; border-color: #fca5a5;">
+                <ul style="list-style: none;">
+                    @foreach($errors->all() as $error)
+                        <li>⚠️ {{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
 
