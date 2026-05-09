@@ -18,6 +18,7 @@
                         <th>Name</th>
                         <th>Duration</th>
                         <th>Price</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -27,10 +28,16 @@
                             <td style="font-weight: 600;">{{ $service->name }}</td>
                             <td>{{ $service->duration }} mins</td>
                             <td>₱{{ number_format($service->price, 2) }}</td>
+                            <td>{{ $service->active ? 'Active' : 'Inactive' }}</td>
                             <td>
-                                <div style="display: flex; gap: 0.5rem;">
+                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                                     <a href="{{ route('admin.services.edit', $service) }}" class="btn" style="background: rgba(255,255,255,0.1); font-size: 0.8rem; padding: 0.4rem 0.8rem;">Edit</a>
-                                    <form action="{{ route('admin.services.destroy', $service) }}" method="POST" onsubmit="return confirm('Delete this service?')">
+                                    <form action="{{ route('admin.services.toggle', $service) }}" method="POST" onsubmit="return confirm('{{ $service->active ? 'Deactivate' : 'Activate' }} this service?')">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn" style="background: rgba(31, 142, 236, 0.14); color: #1f8dec; font-size: 0.8rem; padding: 0.4rem 0.8rem;">{{ $service->active ? 'Deactivate' : 'Activate' }}</button>
+                                    </form>
+                                    <form action="{{ route('admin.services.destroy', $service) }}" method="POST" onsubmit="return confirm('Delete this service? This will remove it from the system.')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn" style="background: rgba(255, 118, 117, 0.2); color: #ff7675; font-size: 0.8rem; padding: 0.4rem 0.8rem;">Delete</button>

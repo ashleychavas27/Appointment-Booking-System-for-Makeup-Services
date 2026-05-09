@@ -43,19 +43,31 @@ class ServiceController extends Controller
             'name' => 'required',
             'price' => 'required|numeric',
             'duration' => 'required|integer',
+            'active' => 'nullable|boolean',
         ]);
 
-        $service->update($request->all());
+        $service->update(array_merge(
+            $request->only(['name', 'description', 'price', 'duration']),
+            ['active' => $request->has('active')]
+        ));
+
         return redirect()->route('admin.services.index')->with('success', 'Service updated successfully.');
     }
 
     public function destroy(Service $service)
     {
-        if ($service->appointments()->count() > 0) {
-            return back()->withErrors(['service' => 'Cannot delete a service that has existing appointments. Try updating it instead to preserve your records.']);
-        }
-
         $service->delete();
         return redirect()->route('admin.services.index')->with('success', 'Service deleted successfully.');
+    }
+
+    public function toggleActive(Service $service)
+    {
+        $service->update(['active' => !$service->active]);
+
+        $message = $service->active
+            ? 'Service is now active and visible to clients.'
+            : 'Service has been deactivated and will no longer appear to clients.';
+
+        return redirect()->route('admin.services.index')->with('success', $message);
     }
 }

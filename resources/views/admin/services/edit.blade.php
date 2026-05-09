@@ -21,6 +21,11 @@
                 <textarea name="description" rows="3">{{ $service->description }}</textarea>
             </div>
 
+            <div class="form-group" style="display: flex; align-items: center; gap: 0.75rem;">
+                <input type="checkbox" name="active" id="active" {{ $service->active ? 'checked' : '' }}>
+                <label for="active">Active for clients</label>
+            </div>
+
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                 <div class="form-group">
                     <label>Price (₱)</label>

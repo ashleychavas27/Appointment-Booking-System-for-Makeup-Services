@@ -31,7 +31,7 @@ class DashboardController extends Controller
 
     public function bookingPage()
     {
-        $services = Service::all();
+        $services = Service::where('active', true)->get();
         return view('client.book', compact('services'));
     }
 

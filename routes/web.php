@@ -24,6 +24,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
     Route::resource('services', ServiceController::class);
+    Route::patch('services/{service}/toggle', [ServiceController::class, 'toggleActive'])->name('services.toggle');
     Route::get('/appointments', [AdminAppointmentController::class, 'index'])->name('appointments.index');
     Route::post('/appointments/{appointment}/status', [AdminAppointmentController::class, 'updateStatus'])->name('appointments.status');
     Route::post('/appointments/{appointment}/reschedule', [AdminAppointmentController::class, 'reschedule'])->name('appointments.reschedule');

@@ -13,6 +13,7 @@ class Service extends Model
         'description',
         'price',
         'duration',
+        'active',
     ];
 
     public function appointments()
