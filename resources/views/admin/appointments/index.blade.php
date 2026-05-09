@@ -42,7 +42,15 @@
                                         <form action="{{ route('admin.appointments.status', $appointment) }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="status" value="approved">
-                                            <button type="submit" class="btn" style="background: rgba(0, 184, 148, 0.2); color: #00b894; font-size: 0.8rem; padding: 0.4rem 0.8rem;">Approve</button>
+                                            <button type="submit" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">Approve</button>
+                                        </form>
+                                    @endif
+
+                                    @if($appointment->status === 'approved')
+                                        <form action="{{ route('admin.appointments.status', $appointment) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="status" value="completed">
+                                            <button type="submit" class="btn" style="background: #dcfce7; color: #166534; font-size: 0.8rem; padding: 0.4rem 0.8rem; border: 1px solid #86efac;">Mark Completed</button>
                                         </form>
                                     @endif
 
@@ -50,31 +58,11 @@
                                         <form action="{{ route('admin.appointments.status', $appointment) }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="status" value="cancelled">
-                                            <button type="submit" class="btn" style="background: rgba(255, 118, 117, 0.2); color: #ff7675; font-size: 0.8rem; padding: 0.4rem 0.8rem;">Cancel</button>
+                                            <button type="submit" class="btn" style="background: #fee2e2; color: #991b1b; font-size: 0.8rem; padding: 0.4rem 0.8rem; border: 1px solid #fca5a5;">Cancel</button>
                                         </form>
-
-                                        <!-- Simple Reschedule trigger (could be a modal in a real app, here we just show a small form) -->
-                                        <button onclick="document.getElementById('reschedule-{{ $appointment->id }}').style.display='block'" class="btn" style="background: rgba(255,255,255,0.1); font-size: 0.8rem; padding: 0.4rem 0.8rem;">Reschedule</button>
+                                    @else
+                                        <span style="opacity: 0.4; font-size: 0.8rem;">No actions</span>
                                     @endif
-                                </div>
-
-                                <!-- Hidden Reschedule Form -->
-                                <div id="reschedule-{{ $appointment->id }}" style="display:none; margin-top: 1rem; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: rgba(255,255,255,0.05);">
-                                    <form action="{{ route('admin.appointments.reschedule', $appointment) }}" method="POST">
-                                        @csrf
-                                        <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
-                                            <div>
-                                                <label style="font-size: 0.7rem;">New Date</label>
-                                                <input type="date" name="appointment_date" style="padding: 0.4rem;" required>
-                                            </div>
-                                            <div>
-                                                <label style="font-size: 0.7rem;">New Time</label>
-                                                <input type="time" name="appointment_time" style="padding: 0.4rem;" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Save</button>
-                                            <button type="button" onclick="this.parentElement.parentElement.parentElement.style.display='none'" class="btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">X</button>
-                                        </div>
-                                    </form>
                                 </div>
                             </td>
                         </tr>

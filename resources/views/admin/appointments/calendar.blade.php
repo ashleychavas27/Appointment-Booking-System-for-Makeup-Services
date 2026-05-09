@@ -15,20 +15,20 @@
         @if($dates->count() > 0)
             @foreach($dates as $date => $dayAppointments)
                 <div class="glass-card">
-                    <h3 style="color: var(--primary); border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                    <h3 style="color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1rem;">
                         {{ \Carbon\Carbon::parse($date)->format('l, M d') }}
                     </h3>
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
                         @foreach($dayAppointments->sortBy('appointment_time') as $appointment)
-                            <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 0.8rem; border-radius: 12px; background: rgba(255,255,255,0.03); border-left: 4px solid {{ $appointment->status === 'approved' ? '#00b894' : '#fdcb6e' }};">
-                                <div style="font-weight: 700; min-width: 70px;">
+                            <div style="display: flex; gap: 1rem; align-items: flex-start; padding: 0.8rem; border-radius: 12px; background: var(--bg); border-left: 4px solid {{ $appointment->status === 'approved' ? '#166534' : '#92400e' }};">
+                                <div style="font-weight: 700; min-width: 80px;">
                                     {{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}
                                 </div>
                                 <div>
                                     <div style="font-weight: 600;">{{ $appointment->user->name }}</div>
-                                    <div style="font-size: 0.8rem; opacity: 0.7;">{{ $appointment->service->name }}</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-light);">{{ $appointment->service->name }}</div>
                                     <div style="margin-top: 0.3rem;">
-                                        <span class="badge badge-{{ $appointment->status }}" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;">
+                                        <span class="badge badge-{{ $appointment->status }}" style="font-size: 0.65rem;">
                                             {{ ucfirst($appointment->status) }}
                                         </span>
                                     </div>
