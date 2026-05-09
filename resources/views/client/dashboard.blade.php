@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="animate-fade">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
         <div>
             <h1 style="font-weight: 700;">My Appointments</h1>
             <p style="opacity: 0.7;">View and manage your makeup sessions.</p>
@@ -50,10 +50,9 @@
                 </tbody>
             </table>
         @else
-            <div style="text-align: center; padding: 4rem 2rem;">
-                <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
-                <h3>No appointments yet</h3>
-                <p style="opacity: 0.6; margin-top: 0.5rem;">Your glow-up journey starts here. Booking feature coming in Phase 2!</p>
+            <div style="text-align: center; padding: 3rem;">
+                <p style="opacity: 0.5; margin-bottom: 1.5rem;">You haven't booked any services yet.</p>
+                <a href="{{ route('client.book') }}" class="btn btn-primary">Book Your First Session</a>
             </div>
         @endif
     </div>

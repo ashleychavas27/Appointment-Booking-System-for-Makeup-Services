@@ -13,7 +13,7 @@
             <h3 style="margin-bottom: 1.5rem;">Our Services</h3>
             <div style="display: flex; flex-direction: column; gap: 1rem;">
                 @foreach($services as $service)
-                    <div style="padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: rgba(255,255,255,0.02);">
+                    <div style="padding: 1rem; border: 1px solid var(--border); border-radius: 12px; background: rgba(0,0,0,0.02);">
                         <h4 style="color: var(--primary);">{{ $service->name }}</h4>
                         <p style="font-size: 0.8rem; opacity: 0.6; margin: 0.3rem 0;">{{ $service->description }}</p>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">

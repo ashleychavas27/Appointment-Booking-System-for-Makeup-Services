@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Models\Appointment;
 use App\Models\Service;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -45,14 +43,13 @@ class DashboardController extends Controller
             'appointment_time' => 'required',
         ]);
 
-        // Check if slot already taken
         $exists = Appointment::where('appointment_date', $request->appointment_date)
             ->where('appointment_time', $request->appointment_time)
             ->where('status', '!=', 'cancelled')
             ->exists();
 
         if ($exists) {
-            return back()->withErrors(['appointment_time' => 'This time slot is already booked. Please choose another.'])->withInput();
+            return back()->withErrors(['appointment_time' => 'This slot is taken.'])->withInput();
         }
 
         Appointment::create([
